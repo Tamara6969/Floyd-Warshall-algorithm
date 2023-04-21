@@ -1,0 +1,28 @@
+import math
+
+def floyd_warshall(graph):
+    n = len(graph)
+    dist = [[math.inf for _ in range(n)] for _ in range(n)]
+    for i in range(n):
+        for j in range(n):
+            if i == j:
+                dist[i][j] = 0
+            elif graph[i][j] != 0:
+                dist[i][j] = graph[i][j]
+
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j])
+    
+    return dist
+
+graph = [    [0, 5, 0, 10],
+    [0, 0, 3, 0],
+    [0, 0, 0, 1],
+    [0, 0, 0, 0]
+]
+
+distances = floyd_warshall(graph)
+for row in distances:
+    print(row)
